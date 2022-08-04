@@ -1,19 +1,25 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { increment, decrement } from "./actions";
+import Header from "./containers/Header";
+import ProductListing from "./containers/ProductListing";
+import ProductDetails from "./containers/ProductDetails";
 
 function App() {
-  const counter = useSelector((state) => state.counter);
-  const isLogged = useSelector((state) => state.isLogged);
-  const dispatch = useDispatch();
-
   return (
-    <div className="App">
-      <h1>Counter: {counter}</h1>
-      <button onClick={() => dispatch(increment(3))}>+</button>
-      <button onClick={() => dispatch(decrement())}>-</button>
-
-      {isLogged ? <h3>Logged is true</h3> : ""}
+    <div>
+      <Router>
+        <Header />
+        <Routes>
+          <Route exact path="/" element={<ProductListing />} />
+          <Route
+            exact
+            path="/product/:productId"
+            element={<ProductDetails />}
+          />
+          <Route>404 Not Found</Route>
+        </Routes>
+      </Router>
     </div>
   );
 }
